@@ -295,7 +295,7 @@ class PlanningGraph():
             if self.s_levels[level] == self.s_levels[level - 1]:
                 leveled = True
 
-    def add_action_level(self, level):
+    def add_action_level(self, level: int):
         ''' add an A (action) level to the Planning Graph
 
         :param level: int
@@ -311,6 +311,19 @@ class PlanningGraph():
         #   set iff all prerequisite literals for the action hold in S0.  This can be accomplished by testing
         #   to see if a proposed PgNode_a has prenodes that are a subset of the previous S level.  Once an
         #   action node is added, it MUST be connected to the S node instances in the appropriate s_level set.
+        states = self.s_levels[level]
+        for action in self.all_actions:
+            a = PgNode_a(action)
+            s_nodes = a.precond_s_nodes()
+            flag = False
+            for s in s_nodes:
+                if s in states:
+                    flag = True
+                else:
+                    flag = False
+
+            if flag:
+                self.a_levels[level].append(a)
 
     def add_literal_level(self, level):
         ''' add an S (literal) level to the Planning Graph
