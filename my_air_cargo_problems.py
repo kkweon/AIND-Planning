@@ -11,19 +11,19 @@ from my_planning_graph import PlanningGraph
 
 
 # User Defined Helper Functions
-def At(object: str, place: str)->expr:
+def At(object: str, place: str) -> expr:
     return expr("At({}, {})".format(object, place))
 
 
-def In(object1: str, object2: str)->expr:
+def In(object1: str, object2: str) -> expr:
     return expr("In({}, {})".format(object1, object2))
 
 
-def Load(cargo: str, plane: str, airport: str)->expr:
+def Load(cargo: str, plane: str, airport: str) -> expr:
     return expr("Load({}, {}, {})".format(cargo, plane, airport))
 
 
-def Unload(cargo: str, plane: str, airport: str)->expr:
+def Unload(cargo: str, plane: str, airport: str) -> expr:
     return expr("Unload({}, {}, {})".format(cargo, plane, airport))
 
 
