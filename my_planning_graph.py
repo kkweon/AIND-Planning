@@ -94,7 +94,7 @@ class PgNode_s(PgNode):
         '''
         if isinstance(other, self.__class__):
             return (self.symbol == other.symbol) \
-                   and (self.is_pos == other.is_pos)
+                and (self.is_pos == other.is_pos)
 
     def __hash__(self):
         return hash(self.symbol) ^ hash(self.is_pos)
@@ -178,7 +178,7 @@ class PgNode_a(PgNode):
         '''
         if isinstance(other, self.__class__):
             return (self.action.name == other.action.name) \
-                   and (self.action.args == other.action.args)
+                and (self.action.args == other.action.args)
 
     def __hash__(self):
         return hash(self.action.name) ^ hash(self.action.args)
@@ -311,21 +311,38 @@ class PlanningGraph():
         #   set iff all prerequisite literals for the action hold in S0.  This can be accomplished by testing
         #   to see if a proposed PgNode_a has prenodes that are a subset of the previous S level.  Once an
         #   action node is added, it MUST be connected to the S node instances in the appropriate s_level set.
-        states = self.s_levels[level]
-        pos_states = [s for s in states if s.is_pos]
-        neg_states = [s for s in sates if not s.is_pos]
+        s_levels = self.s_levels[level]
+        good_action_list = []
         for action in self.all_actions:
-            good_action = True
+            a = PgNode_a(action)
+            if a.prenodes.issubset(s_levels):
+                good_action_list.append(a)
+                for s in s_levels:
+                    if s in a.prenodes:
+                        s.children.add(a)
+                        a.parents.add(s)
 
-            for clause in action.precond_pos:
-                if clause in neg_states:
-                    good_action = False
-            for clause in action.precond_neg:
-                if clause in pos_states:
-                    good_action = False
-            if good_action:
-                a = PgNode_a(action)
-                self.a_levels[level].append(a)
+        self.a_levels.append(good_action_list)
+
+        # states = self.s_levels[level]
+        # pos_states = [s for s in states if s.is_pos]
+        # neg_states = [s for s in states if not s.is_pos]
+        # good_action_list = []
+
+        # for action in self.all_actions:
+        #     good_action = True
+
+        #     for clause in action.precond_pos:
+        #         if clause in neg_states:
+        #             good_action = False
+        #     for clause in action.precond_neg:
+        #         if clause in pos_states:
+        #             good_action = False
+        #     if good_action:
+        #         a = PgNode_a(action)
+        #         good_action_list.append(a)
+
+        # self.a_levels.append(good_action_list)
 
     def add_literal_level(self, level):
         ''' add an S (literal) level to the Planning Graph
