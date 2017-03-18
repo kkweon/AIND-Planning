@@ -2,7 +2,7 @@
 
 function search {
     #timeout in Linux
-    gtimeout 5m python3 run_search.py -p $1 -s $2
+    timeout 10m python3 run_search.py -p $1 -s $2
 }
 
 function control_c {
