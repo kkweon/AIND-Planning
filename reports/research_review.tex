@@ -1,0 +1,69 @@
+\documentclass[letterpaper]{IEEEtran}
+
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[
+    backend=biber,
+    style=nature,
+]{biblatex}
+
+
+\addbibresource{research_review.bib}
+\graphicspath{ {assets/} }
+
+\geometry{margin=1in}
+\pagestyle{fancy}
+% Headers
+\lhead{Research Review: Historical Developments in the field of AI Planning}
+\rhead{AI Planning}
+
+\cfoot{\thepage\ of \pageref{LastPage}}
+% Title
+\title{\Large Historical Developments in the Field of AI Planning}
+\author{Kyung Mo Kweon}
+\date{\today}
+
+% Document
+\begin{document}
+% Title
+\maketitle
+\thispagestyle{fancy}
+
+% Abstract
+\begin{abstract}
+Planning in artificial intelligence is a decision making process by searching through state spaces and planning a sequence of actions to reach a goal state. In this paper, I am going to review 3 most important historical developments in the field of AI planning and cover the impacts of these developments on the field of AI.
+\end{abstract}
+
+\section{Development of STRIPS}
+The development of STRIPS, which stands for \textit{STanford Research Institute Problem Solver}, was the most important development in the AI planning history. STRIPS was initially the first major planning system used in the Shakey robot project at SRI \cite{strips}. Later, the STRIPS language was created to define states and actions in order to express planning problems concretely. In fact, the representation of actions by STRIPS is still used nowadays to express automated planning problems and influence other future-developed planning definition languages such as ADL/PDDL.
+
+\section{PDDL and ADL}
+The Action Description Language or ADL was developed because STRIPS were too restrictive to represent some of real world problems \cite{ADL}.
+For example, STRIPS does not allow negative literal in states, and the following representation is only possible in ADL $\neg Rich \wedge \neg Famous$. 
+
+Later, the Planning Domain Definition Language or PDDL was developed to finally standardize syntax for representing STRIPS, ADL and other languages \cite{PDDL}. It allows researchers to share their results and benchmark performances of their planners.
+
+\section{GRAPHPLAN and SATPLAN}
+Since it becomes possible to represent actions/states in logical languages, and now it's time to talk about how to solve a planning problem. There are traditional state space search algorithms such as forward and backward searches. However, these search algorithms were sometimes impractical when there are too many possible actions. Sometimes, it is hard to implement when there is no relationship between predecessor and successive actions.
+
+In order to solve a planning problem efficiently, a data structure, Planning Graph, can be created, and it can be solved via GRAPHPLAN \cite{graphplan}. The GRAPHPLAN algorithm solves a problem by creating a planning graph and checking mutex links which connect mutually exclusive actions or literals.
+
+Another worth for mentioning is the SATPLAN. It solves a problem by translating STRIPS problems in propositional logic sentences and checking the satisfiability of its logical sentences \cite{satplan}. Their research also proved that the most compact form of propositional representations does not necessarily lead to the fastest solution times.
+
+\section{Conclusion}
+In this paper, I showed how planning problems evolved in the field of AI. 
+
+First, if one wants to solve a problem, the first step is to write down a problem. This step was made possible due to the development of STRIPS. 
+
+Secondly, there was a need for the unified language, and that's how PDDL were developed to standardize all the syntax of STRIPS and ADL. It allows researchers to share their results and benchmark the performances of their planners. 
+
+Lastly, I introduced GRAPHPLAN and SATPLAN to actually solve a planning problem. Although there are more search algorithms these days, it's still unknown which algorithm is the best. Therefore, it's important to know each of algorithms and find the best working algorithm for a problem.
+
+\medskip
+\printbibliography
+\end{document}
